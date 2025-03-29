@@ -29,8 +29,7 @@ def main():
     score = 0
 
     # Fondo de carretera dinamico
-    background_image = pygame.image.load("images\plainBackground.jpg"
-    "").convert()
+    background_image = pygame.image.load("images\plainBackground.jpg").convert()
     background_y = 0 #Position initial
 
     dificultad = 0
