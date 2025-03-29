@@ -2,9 +2,8 @@
 import math
 import pygame
 import random
-from settings import alturaDePantalla, widthOfScreen, blanco, negro, rojo, FPS
+from settings import heightOfScreen, widthOfScreen, white, black, red, FPS
 from player import Player
-from obstacle import Obstacle
 from obstacles.hole import Hole
 from obstacles.tree import Tree
 from obstacles.queen import Queen
@@ -16,7 +15,7 @@ def main():
     pygame.init()
 
     # Crear la pantalla del juego
-    screen = pygame.display.set_mode((widthOfScreen, alturaDePantalla))
+    screen = pygame.display.set_mode((widthOfScreen, heightOfScreen))
 
     # Nombrar la pantalla del juego
     pygame.display.set_caption("Infinite Runner")
@@ -39,7 +38,7 @@ def main():
     difficulty = 0
 
     # ciclo principal del juego
-    finDelJuego = False
+    gameOver = False
 
     sound_gameOver = False
     while True:
@@ -51,10 +50,10 @@ def main():
                 return
 
             # Reinicia el juego si una tecla es precionada en caso de que estar en fin del juego
-            if finDelJuego and (evento.type == pygame.KEYDOWN or evento.type == pygame.MOUSEBUTTONDOWN):
+            if gameOver and (evento.type == pygame.KEYDOWN or evento.type == pygame.MOUSEBUTTONDOWN):
                 return main() #Reinicia el juego al llamar la funcion main() de nuevo
 
-        if not finDelJuego:
+        if not gameOver:
 
             if random.randint(1,100 - difficulty) == 1:
                 obstacles.append(Hole()) # Agrega un nuevo obstaculo a la lista de obstaculos
@@ -67,12 +66,12 @@ def main():
                 obstacle.refrescar(difficulty)
             
             # Remover los obstaculos que quedan fuera de la pantalla
-            obstacles = [obs for obs in obstacles if obs.rect.y < alturaDePantalla]
+            obstacles = [obs for obs in obstacles if obs.rect.y < heightOfScreen]
 
             # Colisiones
             for obstacle in obstacles:
                 if player.rect.colliderect(obstacle.rect):
-                    finDelJuego = True
+                   gameOver = True
             
             # Contador de puntaje
             score += 1
@@ -81,7 +80,7 @@ def main():
 
             # Dibujar pantalla
             screen.blit(background_image, (0, background_y))
-            screen.blit(background_image, (0, background_y - alturaDePantalla))
+            screen.blit(background_image, (0, background_y - heightOfScreen))
 
             # Dibujar jugador
             player.draw(screen)
@@ -91,21 +90,21 @@ def main():
                 obstacle.draw(screen)
 
             # Mostrar el puntaje
-            score_text = font.render(f"Score: {score}", True, negro)
+            score_text = font.render(f"Score: {score}", True, black)
             screen.blit(score_text, (10, 10))
 
             # Setear la velocidad de movimiento del fondo
             background_y += 2 + difficulty
 
             # #Refresca la posicion del fondo
-            if background_y >= alturaDePantalla:
+            if background_y >= heightOfScreen:
                 background_y = 0
 
             # Refresca la posicion del jugador
-            player.refrescar()
+            player.refresh()
         
         # Logica para final del juego para mostrat un texto
-        if finDelJuego:
+        if gameOver:
             # puntajeFinal = score
             # if puntajeFinal > mejorPuntaje:
             #     mejorPuntaje = puntajeFinal             
@@ -115,11 +114,11 @@ def main():
                 sound_gameOver = True  # Set the flag to True so it doesn't play again
 
 
-            mensajeDeFinDelJuego = font.render("GAME OVER", True, rojo)
-            mensajeDeReinicio = font.render("Preciona cualquier tecla para reiniciar", True, negro)
-            #puntajeRecord = font.render("BEST: " + str(mejorPuntaje) , True, negro)
-            screen.blit(mensajeDeFinDelJuego, (widthOfScreen // 2 - mensajeDeFinDelJuego.get_width() // 2, alturaDePantalla // 2 - 50))
-            screen.blit(mensajeDeReinicio, (widthOfScreen // 2 - mensajeDeReinicio.get_width() // 2, alturaDePantalla // 2 + 50 ))
+            mensajeDeFinDelJuego = font.render("GAME OVER", True, red)
+            mensajeDeReinicio = font.render("Preciona cualquier tecla para reiniciar", True, black)
+            #puntajeRecord = font.render("BEST: " + str(mejorPuntaje) , True, black)
+            screen.blit(mensajeDeFinDelJuego, (widthOfScreen // 2 - mensajeDeFinDelJuego.get_width() // 2, heightOfScreen // 2 - 50))
+            screen.blit(mensajeDeReinicio, (widthOfScreen // 2 - mensajeDeReinicio.get_width() // 2, heightOfScreen // 2 + 50 ))
         # Actualiza la pantalla
         pygame.display.flip()
 
