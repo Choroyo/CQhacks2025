@@ -1,20 +1,22 @@
-# Import the pygame library for game development
+# Import the pygame library for game development 
 import pygame
-from settings import rojo, alturaDePantalla, widthOfScreen
+from settings import red, heightOfScreen, widthOfScreen
 
 class Player:
     def __init__(self):
-        self.tamaño = 50
-        self.color = rojo
+        self.size = 80
+        self.image = pygame.image.load("images/whiter_rabbit.png")
+        self.image = pygame.transform.scale(self.image, (self.size, self.size))
+
         self.x = widthOfScreen // 2
-        self.y = widthOfScreen - 100
-        self.rect = pygame.Rect(self.x, self.y, self.tamaño, self.tamaño)
+        self.y = heightOfScreen - 100  # Fixed this line
+        self.rect = pygame.Rect(self.x, self.y, self.size, self.size)
     
-    def refrescar(self):
-        # refresca la position del player siguiendo el cursor
+    def refresh(self):
+        # Refresh the player's position to follow the cursor
         mouse_x, mouse_y = pygame.mouse.get_pos()
-        self.rect.x = mouse_x - self.tamaño // 2 
-        self.rect.y = mouse_y - self.tamaño // 2
+        self.rect.x = mouse_x - self.size // 2 
+        self.rect.y = mouse_y - self.size // 2
     
     def draw(self, screen):
-        pygame.draw.rect(screen, self.color, self.rect)
+        screen.blit(self.image, self.rect)  # Fixed this line
