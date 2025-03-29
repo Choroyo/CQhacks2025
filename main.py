@@ -55,10 +55,13 @@ def main():
 
         if not gameOver:
 
-            if random.randint(1,100 - difficulty) == 1:
+            if random.randint(1,150 - difficulty) == 1:
                 obstacles.append(Hole()) # Agrega un nuevo obstaculo a la lista de obstaculos
+            if random.randint(1,150 - difficulty) == 1:
                 obstacles.append(Tree())
+            if random.randint(1,250 - difficulty) == 1:
                 obstacles.append(Queen())
+            if random.randint(1,150 - difficulty) == 1:
                 obstacles.append(Rock())
             
             # Actualiza la position de cada obstaculo
