@@ -1,13 +1,13 @@
 # Import the pygame library for game development
 import pygame
-from settings import rojo, alturaDePantalla, anchoDePantalla
+from settings import rojo, alturaDePantalla, widthOfScreen
 
 class Player:
     def __init__(self):
         self.tamaño = 50
         self.color = rojo
-        self.x = anchoDePantalla // 2
-        self.y = anchoDePantalla - 100
+        self.x = widthOfScreen // 2
+        self.y = widthOfScreen - 100
         self.rect = pygame.Rect(self.x, self.y, self.tamaño, self.tamaño)
     
     def refrescar(self):

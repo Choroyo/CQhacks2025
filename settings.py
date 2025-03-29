@@ -1,5 +1,5 @@
 # Dimensiones de la pantalla en px
-anchoDePantalla = 800
+widthOfScreen = 800
 alturaDePantalla = 800
 
 

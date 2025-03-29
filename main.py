@@ -2,9 +2,13 @@
 import math
 import pygame
 import random
-from settings import alturaDePantalla, anchoDePantalla, blanco, negro, rojo, FPS
+from settings import alturaDePantalla, widthOfScreen, blanco, negro, rojo, FPS
 from player import Player
 from obstacle import Obstacle
+from obstacles.hole import Hole
+from obstacles.tree import Tree
+from obstacles.queen import Queen
+from obstacles.rock import Rock
 
 def main():
 
@@ -12,7 +16,7 @@ def main():
     pygame.init()
 
     # Crear la pantalla del juego
-    pantalla = pygame.display.set_mode((anchoDePantalla, alturaDePantalla))
+    screen = pygame.display.set_mode((widthOfScreen, alturaDePantalla))
 
     # Nombrar la pantalla del juego
     pygame.display.set_caption("Infinite Runner")
@@ -33,7 +37,7 @@ def main():
     "").convert()
     background_y = 0 #Position initial
 
-    dificultad = 0
+    difficulty = 0
 
     # ciclo principal del juego
     finDelJuego = False
@@ -52,12 +56,15 @@ def main():
 
         if not finDelJuego:
 
-            if random.randint(1,20 - dificultad) == 1:
-                obstacles.append(Obstacle())
+            if random.randint(1,100 - difficulty) == 1:
+                obstacles.append(Hole()) # Agrega un nuevo obstaculo a la lista de obstaculos
+                obstacles.append(Tree())
+                obstacles.append(Queen())
+                obstacles.append(Rock())
             
             # Actualiza la position de cada obstaculo
             for obstacle in obstacles:
-                obstacle.refrescar(dificultad)
+                obstacle.refrescar(difficulty)
             
             # Remover los obstaculos que quedan fuera de la pantalla
             obstacles = [obs for obs in obstacles if obs.rect.y < alturaDePantalla]
@@ -70,25 +77,25 @@ def main():
             # Contador de puntaje
             score += 1
 
-            dificultad = math.ceil(score // 500)
+            difficulty = math.ceil(score // 500)
 
             # Dibujar pantalla
-            pantalla.blit(background_image, (0, background_y))
-            pantalla.blit(background_image, (0, background_y - alturaDePantalla))
+            screen.blit(background_image, (0, background_y))
+            screen.blit(background_image, (0, background_y - alturaDePantalla))
 
             # Dibujar jugador
-            player.draw(pantalla)
+            player.draw(screen)
             
             # Dibujar cada obstaculo
             for obstacle in obstacles:
-                obstacle.draw(pantalla)
+                obstacle.draw(screen)
 
             # Mostrar el puntaje
             score_text = font.render(f"Score: {score}", True, negro)
-            pantalla.blit(score_text, (10, 10))
+            screen.blit(score_text, (10, 10))
 
             # Setear la velocidad de movimiento del fondo
-            background_y += 2 + dificultad
+            background_y += 2 + difficulty
 
             # #Refresca la posicion del fondo
             if background_y >= alturaDePantalla:
@@ -105,8 +112,8 @@ def main():
             mensajeDeFinDelJuego = font.render("GAME OVER", True, rojo)
             mensajeDeReinicio = font.render("Preciona cualquier tecla para reiniciar", True, negro)
             #puntajeRecord = font.render("BEST: " + str(mejorPuntaje) , True, negro)
-            pantalla.blit(mensajeDeFinDelJuego, (anchoDePantalla // 2 - mensajeDeFinDelJuego.get_width() // 2, alturaDePantalla // 2 - 50))
-            pantalla.blit(mensajeDeReinicio, (anchoDePantalla // 2 - mensajeDeReinicio.get_width() // 2, alturaDePantalla // 2 + 50 ))
+            screen.blit(mensajeDeFinDelJuego, (widthOfScreen // 2 - mensajeDeFinDelJuego.get_width() // 2, alturaDePantalla // 2 - 50))
+            screen.blit(mensajeDeReinicio, (widthOfScreen // 2 - mensajeDeReinicio.get_width() // 2, alturaDePantalla // 2 + 50 ))
         # Actualiza la pantalla
         pygame.display.flip()
 
