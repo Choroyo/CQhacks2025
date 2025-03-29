@@ -4,17 +4,18 @@ from settings import widthOfScreen  # Import screen width setting
 
 class Tree:
     def __init__(self):
-        self.original_image = pygame.image.load("images/tree.png")  # Load Hole image
-        self.image = pygame.transform.scale(self.original_image, (150, 150))  # Resize to 50x50
-        self.rect = self.image.get_rect()  # Get the new rect size
-        self.rect.x = random.randint(0, widthOfScreen - self.rect.width)  # Random X position
-        self.rect.y = -self.rect.height  # Start above the screen
-        self.speed = 2  # Default speed
+        self.original_image = pygame.image.load("images/tree.png")  
+        self.image = pygame.transform.scale(self.original_image, (150, 150))  
+        
+        # Use a smaller hitbox
+        self.rect = pygame.Rect(0, 0, 80, 120)  # Adjust the width and height for better accuracy
+        self.rect.x = random.randint(0, widthOfScreen - self.rect.width)
+        self.rect.y = -self.rect.height  
+
+        self.speed = 2  
 
     def refrescar(self, difficulty):
-        # Move the hole downward
         self.rect.y += self.speed + difficulty  
 
     def draw(self, screen):
-        # Draw the hole on the screen
-        screen.blit(self.image, self.rect)
+        screen.blit(self.image, (self.rect.x - 35, self.rect.y - 15))  # Offset to match the visual tree
