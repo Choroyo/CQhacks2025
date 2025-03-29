@@ -18,7 +18,7 @@ def main():
     screen = pygame.display.set_mode((widthOfScreen, heightOfScreen))
 
     # Nombrar la pantalla del juego
-    pygame.display.set_caption("Infinite Runner")
+    pygame.display.set_caption("Mad Dash to Wonderland")
 
     # Clock para controlar los FPS
     clock = pygame.time.Clock()
@@ -40,7 +40,16 @@ def main():
     # ciclo principal del juego
     gameOver = False
 
+    soung_of_running = True
     sound_gameOver = False
+
+    pygame.mixer.init()
+
+    # Load MIDI file
+    midi_path = "music\\albeniz\\alb_esp1.mid"  # Change to your MIDI file path
+    pygame.mixer.music.load(midi_path)
+    pygame.mixer.music.play(-1)  # Loop indefinitely
+
     while True:
         # Manipulador de eventos
         for evento in pygame.event.get():
@@ -54,6 +63,8 @@ def main():
                 return main() #Reinicia el juego al llamar la funcion main() de nuevo
 
         if not gameOver:
+            if not pygame.mixer.music.get_busy():  # Restart if it stops unexpectedly
+                pygame.mixer.music.play(-1)
 
             if random.randint(1,150 - difficulty) == 1:
                 obstacles.append(Hole()) # Agrega un nuevo obstaculo a la lista de obstaculos
@@ -111,6 +122,8 @@ def main():
             # puntajeFinal = score
             # if puntajeFinal > mejorPuntaje:
             #     mejorPuntaje = puntajeFinal             
+            pygame.mixer.music.stop()
+
             if not sound_gameOver:  # Check if sound has already been played
                 game_over_sound = pygame.mixer.Sound("music\\game_over_sound.mp3")  # Load sound effect
                 game_over_sound.play()  # Play the sound when the game ends
