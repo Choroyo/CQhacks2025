@@ -5,7 +5,7 @@ import time
 
 def display_midi_info(midi_file):
     """Displays MIDI track and message info."""
-    print(f"\n🎵 MIDI File: {midi_file.filename}")
+    print(f"\n MIDI File: {midi_file.filename}")
     print(f"Tracks: {len(midi_file.tracks)}\n")
     
     for i, track in enumerate(midi_file.tracks):
@@ -18,7 +18,7 @@ def play_midi(midi_path):
     pygame.init()
     pygame.mixer.init()
 
-    print("\n▶ Playing MIDI...")
+    print("\n Playing MIDI...")
     pygame.mixer.music.load(midi_path)
     pygame.mixer.music.play()
 
@@ -26,7 +26,7 @@ def play_midi(midi_path):
     while pygame.mixer.music.get_busy():
         time.sleep(0.5)
 
-    print("\n🎵 Playback finished.")
+    print("\n Playback finished.")
 
 # Load and display MIDI info
 midi_path = "original_midi_data\\albeniz\\alb_esp1.mid"  # Change this to your file
