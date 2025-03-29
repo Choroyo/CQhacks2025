@@ -29,7 +29,7 @@ def main():
     score = 0
 
     # Fondo de carretera dinamico
-    background_image = pygame.image.load("imagenes\plainBackground.jpg").convert()
+    background_image = pygame.image.load("images\plainBackground.jpg").convert()
     background_y = 0 #Position initial
 
     dificultad = 0
@@ -37,6 +37,7 @@ def main():
     # ciclo principal del juego
     finDelJuego = False
 
+    sound_gameOver = False
     while True:
         # Manipulador de eventos
         for evento in pygame.event.get():
@@ -100,7 +101,13 @@ def main():
         if finDelJuego:
             # puntajeFinal = score
             # if puntajeFinal > mejorPuntaje:
-            #     mejorPuntaje = puntajeFinal                
+            #     mejorPuntaje = puntajeFinal             
+            if not sound_gameOver:  # Check if sound has already been played
+                game_over_sound = pygame.mixer.Sound("music\\game_over_sound.mp3")  # Load sound effect
+                game_over_sound.play()  # Play the sound when the game ends
+                sound_gameOver = True  # Set the flag to True so it doesn't play again
+
+
             mensajeDeFinDelJuego = font.render("GAME OVER", True, rojo)
             mensajeDeReinicio = font.render("Preciona cualquier tecla para reiniciar", True, negro)
             #puntajeRecord = font.render("BEST: " + str(mejorPuntaje) , True, negro)
