@@ -1,8 +1,0 @@
-{
-  "contentDir": "/content",
-  "datalabRoot": "",
-  "jupyterArgs": ["--debug"],
-  "nextJupyterPort": 9000,
-  "serverHost": "",
-  "serverPort": 8080
-}
