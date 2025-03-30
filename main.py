@@ -43,6 +43,23 @@ def main():
     soung_of_running = True
     sound_gameOver = False
 
+     # Load start screen image
+    start_screen_image = pygame.image.load("images\start_game_image.png").convert()
+
+    # **SHOW START SCREEN**
+    screen.blit(start_screen_image, (0, 0))
+    pygame.display.flip()  # Refresh screen
+
+    # **WAIT FOR USER INPUT TO START**
+    waiting = True
+    while waiting:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return
+            if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+                waiting = False  # Exit start screen loop
+
     pygame.mixer.init()
 
     # Load MIDI file
@@ -131,7 +148,7 @@ def main():
 
 
             mensajeDeFinDelJuego = font.render("GAME OVER", True, red)
-            mensajeDeReinicio = font.render("Preciona cualquier tecla para reiniciar", True, black)
+            mensajeDeReinicio = font.render("You did not arrive Wonderland!", True, black)
             #puntajeRecord = font.render("BEST: " + str(mejorPuntaje) , True, black)
             screen.blit(mensajeDeFinDelJuego, (widthOfScreen // 2 - mensajeDeFinDelJuego.get_width() // 2, heightOfScreen // 2 - 50))
             screen.blit(mensajeDeReinicio, (widthOfScreen // 2 - mensajeDeReinicio.get_width() // 2, heightOfScreen // 2 + 50 ))
